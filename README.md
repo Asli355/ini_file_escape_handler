@@ -36,3 +36,10 @@ backslash with nothing after it is also an error, not a literal backslash.
 - `unescape(value: str) -> str` — decode escape sequences.
 - `escape(value: str) -> str` — encode a string so `unescape` recovers it.
 - `EscapeError` — subclass of `ValueError`, raised on malformed input.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
